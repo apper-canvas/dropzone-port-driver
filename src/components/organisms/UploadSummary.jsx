@@ -13,17 +13,16 @@ const UploadSummary = ({
   className,
   ...props 
 }) => {
-  const totalFiles = files.length;
-  const completedFiles = files.filter(f => f.status === "completed").length;
-  const uploadingFiles = files.filter(f => f.status === "uploading").length;
-  const errorFiles = files.filter(f => f.status === "error").length;
-  const pendingFiles = files.filter(f => f.status === "pending").length;
+const totalFiles = files.length;
+  const completedFiles = files.filter(f => f.status_c === "completed").length;
+  const uploadingFiles = files.filter(f => f.status_c === "uploading").length;
+  const errorFiles = files.filter(f => f.status_c === "error").length;
+  const pendingFiles = files.filter(f => f.status_c === "pending").length;
 
-  const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+const totalSize = files.reduce((sum, file) => sum + (file.size_c || 0), 0);
   const completedSize = files
-    .filter(f => f.status === "completed")
-    .reduce((sum, file) => sum + file.size, 0);
-
+    .filter(f => f.status_c === "completed")
+    .reduce((sum, file) => sum + (file.size_c || 0), 0);
   const formatFileSize = (bytes) => {
     if (bytes === 0) return "0 Bytes";
     const k = 1024;
@@ -33,10 +32,10 @@ const UploadSummary = ({
   };
 
   const getOverallProgress = () => {
-    if (totalFiles === 0) return 0;
+if (totalFiles === 0) return 0;
     const totalProgress = files.reduce((sum, file) => {
-      if (file.status === "completed") return sum + 100;
-      if (file.status === "uploading") return sum + file.progress;
+      if (file.status_c === "completed") return sum + 100;
+      if (file.status_c === "uploading") return sum + (file.progress_c || 0);
       return sum;
     }, 0);
     return totalProgress / totalFiles;

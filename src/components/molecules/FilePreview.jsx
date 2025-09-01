@@ -5,24 +5,24 @@ import Badge from "@/components/atoms/Badge";
 import { cn } from "@/utils/cn";
 
 const FilePreview = ({ file, className, ...props }) => {
-  const getFileIcon = (type) => {
-    if (type.startsWith("image/")) return "Image";
+const getFileIcon = (type) => {
+    if (type && type.startsWith("image/")) return "Image";
     if (type === "application/pdf") return "FileText";
-    if (type.includes("word") || type.includes("document")) return "FileText";
-    if (type.includes("spreadsheet") || type.includes("excel")) return "Sheet";
-    if (type.includes("presentation") || type.includes("powerpoint")) return "Presentation";
-    if (type.startsWith("text/")) return "FileText";
-    if (type.includes("json")) return "Code";
-    if (type.includes("csv")) return "Database";
+    if (type && type.includes("word") || type && type.includes("document")) return "FileText";
+    if (type && type.includes("spreadsheet") || type && type.includes("excel")) return "Sheet";
+    if (type && type.includes("presentation") || type && type.includes("powerpoint")) return "Presentation";
+    if (type && type.startsWith("text/")) return "FileText";
+    if (type && type.includes("json")) return "Code";
+    if (type && type.includes("csv")) return "Database";
     return "File";
   };
 
-  const getFileTypeLabel = (type) => {
-    if (type.startsWith("image/")) return type.split("/")[1].toUpperCase();
+const getFileTypeLabel = (type) => {
+    if (type && type.startsWith("image/")) return type.split("/")[1].toUpperCase();
     if (type === "application/pdf") return "PDF";
-    if (type.includes("word")) return "DOCX";
-    if (type.includes("excel")) return "XLSX";
-    if (type.includes("powerpoint")) return "PPTX";
+    if (type && type.includes("word")) return "DOCX";
+    if (type && type.includes("excel")) return "XLSX";
+    if (type && type.includes("powerpoint")) return "PPTX";
     if (type === "text/plain") return "TXT";
     if (type === "application/json") return "JSON";
     if (type === "text/csv") return "CSV";
@@ -37,7 +37,7 @@ const FilePreview = ({ file, className, ...props }) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const getStatusColor = (status) => {
+const getStatusColor = (status) => {
     switch (status) {
       case "completed": return "success";
       case "uploading": return "primary";
@@ -47,9 +47,9 @@ const FilePreview = ({ file, className, ...props }) => {
     }
   };
 
-  const iconColor = file.type.startsWith("image/") ? "text-purple-400" : 
-                   file.type === "application/pdf" ? "text-red-400" :
-                   file.type.includes("word") ? "text-blue-400" :
+const iconColor = file.type_c && file.type_c.startsWith("image/") ? "text-purple-400" : 
+                   file.type_c === "application/pdf" ? "text-red-400" :
+                   file.type_c && file.type_c.includes("word") ? "text-blue-400" :
                    "text-gray-400";
 
   return (
@@ -62,31 +62,31 @@ const FilePreview = ({ file, className, ...props }) => {
       )}
       {...props}
     >
-      <div className={cn("w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center", iconColor)}>
-        <ApperIcon name={getFileIcon(file.type)} className="w-6 h-6" />
+<div className={cn("w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center", iconColor)}>
+        <ApperIcon name={getFileIcon(file.type_c)} className="w-6 h-6" />
       </div>
       
       <div className="flex-1 min-w-0">
-        <h4 className="text-white font-medium text-sm truncate mb-1">{file.name}</h4>
+<h4 className="text-white font-medium text-sm truncate mb-1">{file.Name}</h4>
         <div className="flex items-center space-x-2 text-xs text-gray-400">
-          <span>{formatFileSize(file.size)}</span>
+<span>{formatFileSize(file.size_c)}</span>
           <span>•</span>
           <Badge variant="default" size="sm">
-            {getFileTypeLabel(file.type)}
+            {getFileTypeLabel(file.type_c)}
           </Badge>
         </div>
       </div>
       
       <div className="flex flex-col items-end space-y-1">
-        <Badge variant={getStatusColor(file.status)} size="sm">
-          {file.status === "uploading" && <ApperIcon name="Upload" className="w-3 h-3 mr-1" />}
-          {file.status === "completed" && <ApperIcon name="Check" className="w-3 h-3 mr-1" />}
-          {file.status === "error" && <ApperIcon name="X" className="w-3 h-3 mr-1" />}
-          {file.status.charAt(0).toUpperCase() + file.status.slice(1)}
+<Badge variant={getStatusColor(file.status_c)} size="sm">
+          {file.status_c === "uploading" && <ApperIcon name="Upload" className="w-3 h-3 mr-1" />}
+          {file.status_c === "completed" && <ApperIcon name="Check" className="w-3 h-3 mr-1" />}
+          {file.status_c === "error" && <ApperIcon name="X" className="w-3 h-3 mr-1" />}
+          {file.status_c && file.status_c.charAt(0).toUpperCase() + file.status_c.slice(1)}
         </Badge>
-        {file.uploadedAt && (
+{file.uploaded_at_c && (
           <span className="text-xs text-gray-500">
-            {new Date(file.uploadedAt).toLocaleDateString()}
+            {new Date(file.uploaded_at_c).toLocaleDateString()}
           </span>
         )}
       </div>
