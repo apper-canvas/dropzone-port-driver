@@ -8,9 +8,9 @@ import Signup from '@/components/pages/Signup';
 import Callback from '@/components/pages/Callback';
 import ErrorPage from '@/components/pages/ErrorPage';
 import FileUploader from "@/components/pages/FileUploader";
+import Tasks from "@/components/pages/Tasks";
 import ResetPassword from '@/components/pages/ResetPassword';
 import PromptPassword from '@/components/pages/PromptPassword';
-
 // Create auth context
 export const AuthContext = createContext(null);
 
@@ -117,13 +117,14 @@ function AppContent() {
   return (
     <AuthContext.Provider value={authMethods}>
       <div className="min-h-screen bg-background font-inter">
-        <Routes>
+<Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/callback" element={<Callback />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
           <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
+          <Route path="/tasks" element={<Tasks />} />
           <Route path="/" element={<FileUploader />} />
         </Routes>
         

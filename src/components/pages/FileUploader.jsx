@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { uploadService } from "@/services/api/uploadService";
 import { AuthContext } from "../../App";
 import ApperIcon from "@/components/ApperIcon";
@@ -9,7 +10,6 @@ import DropZone from "@/components/organisms/DropZone";
 import FileList from "@/components/organisms/FileList";
 import UploadSummary from "@/components/organisms/UploadSummary";
 import Button from "@/components/atoms/Button";
-
 const FileUploader = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -148,7 +148,7 @@ const handleClearAll = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex justify-between items-center"
+className="flex justify-between items-center"
         >
           <div className="text-center flex-1 space-y-4">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -164,6 +164,16 @@ const handleClearAll = () => {
                 Welcome, {user.firstName || user.emailAddress}
               </span>
             )}
+            <Link to="/tasks">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center space-x-2"
+              >
+                <ApperIcon name="CheckSquare" className="w-4 h-4" />
+                <span>Tasks</span>
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="sm"
